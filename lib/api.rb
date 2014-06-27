@@ -36,10 +36,10 @@ module HangoutAddon
             :headers => {'Content-Type' => 'application/json'})
 
 
-          puts '-' * 200
+          puts '/' * 200
           puts('REQUEST: ' + response.request.inspect)
           puts('RESPONSE: ' + response.inspect)
-          puts '-' * 200
+          puts '/' * 200
 
           #client = ::HipChat::Client.new(session['access_token'], :api_version => 'v2')
           #client[room_name].send('Hangout bot', 'I talk')
