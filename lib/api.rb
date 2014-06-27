@@ -89,21 +89,22 @@ module HangoutAddon
           token = client.client_credentials.get_token({scope: ENV['HIPCHAT_SCOPES'] }).token
           account.hipchat_oauth_token = token
 
-          account.save
-
           #Subscribe to room message
           response = ::HTTParty.post("https://api.hipchat.com/v2/room/#{account.hipchat_room_id}/webhook?auth_token=#{token}",
-            :query => {
+            :body => {
               :url => "#{ENV['BASE_URI']}/hipchat/new_message",
               :event => 'room_message',
               :name => 'Searching hangout'
             },
             :headers => { 'Content-Type' => 'application/json' })
 
-          puts '&' * 200
+          puts '-' * 200
           puts('REQUEST: ' + response.request.inspect)
           puts('RESPONSE: ' + response.inspect)
-          puts '&' * 200
+          puts '-' * 200
+
+          raise NoAccountError unless response.code == 200
+          account.save
           200
         else
           # Responding with error status will cause the installation to fail
