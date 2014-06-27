@@ -24,10 +24,10 @@ module HangoutAddon
             :query => {'grant_type' => 'client_credentials', 'scope' => 'send_notification view_group send_message'},
             :headers => {'Content-Type' => 'application/json'})
 
-          puts 'P' * 200
+          puts '/' * 200
           puts('REQUEST: ' + response.request.inspect)
           puts('RESPONSE: ' + response.inspect)
-          puts 'P' * 200
+          puts '/' * 200
 
           session = JSON.parse(response.body)
 
