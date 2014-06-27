@@ -31,8 +31,10 @@ module HangoutAddon
 
           #session = JSON.parse(response.body)
 
+          json_body = JSON.generate({ message: 'hangout url'})
+
           response = ::HTTParty.post("https://api.hipchat.com/v2/room/#{room_name}/notification?auth_token=#{account.hipchat_oauth_token}",
-            :body => { message: 'hangout url'},
+            :body => json_body,
             :headers => {'Content-Type' => 'application/json'})
 
 
