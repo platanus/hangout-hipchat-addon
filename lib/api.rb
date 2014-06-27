@@ -90,20 +90,22 @@ module HangoutAddon
           account.hipchat_oauth_token = token
 
           #Subscribe to room message
+          json_body = JSON.generate({
+            :url => "#{ENV['BASE_URI']}/hipchat/new_message",
+            :event => 'room_message',
+            :name => 'Searching hangout'
+          })
+
           response = ::HTTParty.post("https://api.hipchat.com/v2/room/#{account.hipchat_room_id}/webhook?auth_token=#{token}",
-            :body => {
-              :url => "#{ENV['BASE_URI']}/hipchat/new_message",
-              :event => 'room_message',
-              :name => 'Searching hangout'
-            },
+                                     :body => json_body,
             :headers => { 'Content-Type' => 'application/json' })
 
-          puts '/' * 200
+          puts '-' * 200
           puts('REQUEST: ' + response.request.inspect)
           puts('RESPONSE: ' + response.inspect)
-          puts '/' * 200
+          puts '-' * 200
 
-          raise NoAccountError unless response.code == 200
+          raise NoAccountError unless response.code == 201
           account.save
           200
         else
