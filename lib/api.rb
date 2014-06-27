@@ -17,22 +17,26 @@ module HangoutAddon
 
           account = Account.find_by hipchat_room_id: room_id.to_s
 
-          auth = {:username => account.hipchat_oauth_id, :password => account.hipchat_oauth_secret}
+          #auth = {:username => account.hipchat_oauth_id, :password => account.hipchat_oauth_secret}
 
-          response = ::HTTParty.post("https://api.hipchat.com/v2/oauth/token?auth_token=#{account.hipchat_oauth_token}",
-            :basic_auth => auth,
-            :body => {'grant_type' => 'client_credentials', 'scope' => 'send_notification view_group send_message'},
+          #response = ::HTTParty.post("https://api.hipchat.com/v2/oauth/token?auth_token=#{account.hipchat_oauth_token}",
+          #  :basic_auth => auth,
+          #  :body => {'grant_type' => 'client_credentials', 'scope' => 'send_notification view_group send_message'},
+          #  :headers => {'Content-Type' => 'application/json'})
+
+          #puts '/' * 200
+          #puts('REQUEST: ' + response.request.inspect)
+          #puts('RESPONSE: ' + response.inspect)
+          #puts '/' * 200
+
+          #session = JSON.parse(response.body)
+
+          response = ::HTTParty.post("https://api.hipchat.com/v2/room/#{room_name}/notification?auth_token=#{account.hipchat_oauth_token}",
+            :body => { message: 'hangout url'},
             :headers => {'Content-Type' => 'application/json'})
 
-          puts '/' * 200
-          puts('REQUEST: ' + response.request.inspect)
-          puts('RESPONSE: ' + response.inspect)
-          puts '/' * 200
-
-          session = JSON.parse(response.body)
-
-          client = ::HipChat::Client.new(session['access_token'], :api_version => 'v2')
-          client[room_name].send('Hangout bot', 'I talk')
+          #client = ::HipChat::Client.new(session['access_token'], :api_version => 'v2')
+          #client[room_name].send('Hangout bot', 'I talk')
         end
         200
       end
@@ -112,10 +116,9 @@ module HangoutAddon
           })
 
           response = ::HTTParty.post("https://api.hipchat.com/v2/room/#{account.hipchat_room_id}/webhook?auth_token=#{token}",
-                                     :body => json_body,
-            :headers => { 'Content-Type' => 'application/json' })
+            :body => json_body,
+            :headers => {'Content-Type' => 'application/json'})
 
-          raise NoAccountError unless response.code == 201
           account.save
           200
         else
