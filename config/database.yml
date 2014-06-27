@@ -16,7 +16,7 @@ test:
   database: <%= ENV['DEV_DB_NAME'] %>_test
   pool: 5
 
-production:
+default: &default
   adapter: postgresql
   encoding: unicode
   # For details on connection pooling, see rails configuration guide
