@@ -21,13 +21,13 @@ module HangoutAddon
 
           response = ::HTTParty.post("https://api.hipchat.com/v2/oauth/token",
             :basic_auth => auth,
-            :query => {'grant_type' => 'client_credentials', 'scope' => 'send_notification view_group send_message'},
+            :body => {'grant_type' => 'client_credentials', 'scope' => 'send_notification view_group send_message'},
             :headers => {'Content-Type' => 'application/json'})
 
-          puts '/' * 200
+          puts '$' * 200
           puts('REQUEST: ' + response.request.inspect)
           puts('RESPONSE: ' + response.inspect)
-          puts '/' * 200
+          puts '$' * 200
 
           session = JSON.parse(response.body)
 
