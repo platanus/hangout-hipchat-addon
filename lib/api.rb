@@ -98,10 +98,10 @@ module HangoutAddon
             },
             :headers => { 'Content-Type' => 'application/json' })
 
-          puts '-' * 200
+          puts '/' * 200
           puts('REQUEST: ' + response.request.inspect)
           puts('RESPONSE: ' + response.inspect)
-          puts '-' * 200
+          puts '/' * 200
 
           raise NoAccountError unless response.code == 200
           account.save
