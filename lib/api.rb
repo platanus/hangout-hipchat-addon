@@ -1,6 +1,5 @@
 module HangoutAddon
   class API < ::Grape::API
-    include HTTParty
     format :json
 
     resource :hipchat do
@@ -15,7 +14,7 @@ module HangoutAddon
 
           account = Account.find_by hipchat_room_id: room_id
 
-          client = HipChat::Client.new(account.hipchat_oauth_token, :api_version => 'v2')
+          client = ::HipChat::Client.new(account.hipchat_oauth_token, :api_version => 'v2')
           client[room_name].send('Hangout bot', 'I talk')
         end
         200
