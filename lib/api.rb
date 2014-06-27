@@ -21,7 +21,7 @@ module HangoutAddon
 
           response = ::HTTParty.post("https://api.hipchat.com/v2/oauth/token?auth_token=#{account.hipchat_oauth_token}",
             :basic_auth => auth,
-            :query => {'grant_type' => 'client_credentials', 'scope' => 'send_notification view_group send_message'}
+            :query => {'grant_type' => 'client_credentials', 'scope' => 'send_notification view_group send_message'},
             :headers => {'Content-Type' => 'application/json'})
 
           puts 'P' * 200
