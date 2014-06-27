@@ -17,7 +17,7 @@ module HangoutAddon
 
           account = Account.find_by hipchat_room_id: room_id.to_s
 
-          response = ::HTTParty.get("https://api.hipchat.com/v2/oauth/token/#{account.hipchat_oauth_token}",
+          response = ::HTTParty.get("https://api.hipchat.com/v2/oauth/token/#{account.hipchat_oauth_token}?auth_token=#{account.hipchat_oauth_token}",
             :headers => { 'Content-Type' => 'application/json' })
 
           puts 'P' * 200
