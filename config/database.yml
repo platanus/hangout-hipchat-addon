@@ -15,3 +15,10 @@ test:
   <<: *development
   database: <%= ENV['DEV_DB_NAME'] %>_test
   pool: 5
+
+production:
+  adapter: postgresql
+  encoding: unicode
+  # For details on connection pooling, see rails configuration guide
+  # http://guides.rubyonrails.org/configuring.html#database-pooling
+  pool: 5
