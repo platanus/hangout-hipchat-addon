@@ -20,6 +20,11 @@ module HangoutAddon
           response = ::HTTParty.get("https://api.hipchat.com/v2/oauth/token/#{account.hipchat_oauth_token}",
             :headers => { 'Content-Type' => 'application/json' })
 
+          puts '=' * 200
+          puts('REQUEST: ' + response.request.inspect)
+          puts('RESPONSE: ' + response.inspect)
+          puts '=' * 200
+
           session = JSON.parse(response.body)
 
           client = ::HipChat::Client.new(session['access_token'], :api_version => 'v2')
@@ -105,11 +110,6 @@ module HangoutAddon
           response = ::HTTParty.post("https://api.hipchat.com/v2/room/#{account.hipchat_room_id}/webhook?auth_token=#{token}",
                                      :body => json_body,
             :headers => { 'Content-Type' => 'application/json' })
-
-          puts '-' * 200
-          puts('REQUEST: ' + response.request.inspect)
-          puts('RESPONSE: ' + response.inspect)
-          puts '-' * 200
 
           raise NoAccountError unless response.code == 201
           account.save
