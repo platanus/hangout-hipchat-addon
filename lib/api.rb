@@ -92,7 +92,7 @@ module HangoutAddon
           account.save
 
           #Subscribe to room message
-          response = ::HTTParty.post("https://api.hipchat.com/v2/room/#{account.hipchat_room_id}/webhook",
+          response = ::HTTParty.post("https://api.hipchat.com/v2/room/#{account.hipchat_room_id}/webhook?auth_token=#{token}",
             :query => {
               :url => "#{ENV['BASE_URI']}/hipchat/new_message",
               :event => 'room_message',
