@@ -95,7 +95,7 @@ module HangoutAddon
               :url => "#{ENV['BASE_URI']}/hipchat/new_message",
               :event => 'room_message',
               :name => 'Searching hangout'
-            }
+            })
 
           response = response.parsed_response
 
