@@ -4,26 +4,19 @@ require 'grape'
 require 'sinatra'
 require 'rack-flash'
 require 'jwt'
-require 'mongo_mapper'
 require 'oauth2'
 require 'haml'
-
-configure do
-  MongoMapper.setup({
-    ENV['RACK_ENV'] => { 'uri' => ENV['MONGHQ_URL']}
-  }, ENV['RACK_ENV'])
-end
+require "sinatra/activerecord"
 
 module HangoutAddon
   class Web < Sinatra::Base
+  	register Sinatra::ActiveRecordExtension
     enable :sessions
     enable :logging
 
     use ::Rack::Flash
 
     set :session_secret, ENV['SESSION_SECRET']
-
-
   end
 end
 

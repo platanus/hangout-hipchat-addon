@@ -2,19 +2,16 @@ module HangoutAddon
   class Web < ::Sinatra::Base
 
     get '/' do
-      
         account = Account.new
         account.save
         @account_id = account.id
-      
+
       haml :index
     end
 
     get '/support' do
       haml :support
     end
-
-    
 
     get '/hipchat/configure/:account_id' do
       if account = Account.find(params[:account_id])
@@ -38,8 +35,5 @@ module HangoutAddon
       flash[:error] = 'We couldn\'t find your account, please contact support.'
       redirect to('/support')
     end
-
-    
-
   end
 end
