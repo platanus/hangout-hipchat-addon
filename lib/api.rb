@@ -97,7 +97,8 @@ module HangoutAddon
               :url => "#{ENV['BASE_URI']}/hipchat/new_message",
               :event => 'room_message',
               :name => 'Searching hangout'
-            })
+            },
+            :headers => { 'Content-Type' => 'application/json' })
 
           puts '&&' * 200
           puts('REQUEST: ' + response.request.inspect)
