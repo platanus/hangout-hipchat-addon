@@ -17,7 +17,7 @@ module HangoutAddon
 
           account = Account.find_by hipchat_room_id: room_id.to_s
 
-          auth = {:username => account.hipchat_oauth_token, :password => account.hipchat_oauth_secret}
+          auth = {:username => account.hipchat_oauth_id, :password => account.hipchat_oauth_secret}
 
           response = ::HTTParty.post("https://api.hipchat.com/v2/oauth/token?auth_token=#{account.hipchat_oauth_token}",
             :basic_auth => auth,
