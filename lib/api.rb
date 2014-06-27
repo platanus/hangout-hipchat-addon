@@ -47,6 +47,7 @@ module HangoutAddon
           account.hipchat_oauth_secret = params[:oauthSecret]
           account.hipchat_installed = true
           account.hipchat_capabilities_url = params[:capabilitiesUrl]
+          account.hipchat_room_id = params[:roomId]
 
           # Verify capabilities
           response = open(URI.parse(params[:capabilitiesUrl]))
