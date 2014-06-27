@@ -16,7 +16,7 @@ gem 'oauth2'
 
 # Database
 gem "sinatra-activerecord"
-gem "mysql2"
+gem 'pg'
 gem "rake"
 
 # Tools / Debugging

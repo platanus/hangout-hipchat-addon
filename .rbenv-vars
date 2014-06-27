@@ -1,4 +1,4 @@
 HIPCHAT_SCOPES=send_notification view_group send_message
 DEV_DB_NAME=hangout-hipchat-addon
-DEV_DB_USER=root
+DEV_DB_USER=postgres
 DEV_DB_PASSWORD=
