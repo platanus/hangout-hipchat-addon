@@ -19,15 +19,15 @@ module HangoutAddon
 
           auth = {:username => account.hipchat_oauth_id, :password => account.hipchat_oauth_secret}
 
-          response = ::HTTParty.post("https://api.hipchat.com/v2/oauth/token",
+          response = ::HTTParty.post("https://api.hipchat.com/v2/oauth/token?auth_token=#{account.hipchat_oauth_token}",
             :basic_auth => auth,
             :body => {'grant_type' => 'client_credentials', 'scope' => 'send_notification view_group send_message'},
             :headers => {'Content-Type' => 'application/json'})
 
-          puts '$' * 200
+          puts '/' * 200
           puts('REQUEST: ' + response.request.inspect)
           puts('RESPONSE: ' + response.inspect)
-          puts '$' * 200
+          puts '/' * 200
 
           session = JSON.parse(response.body)
 
