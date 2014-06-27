@@ -20,10 +20,10 @@ module HangoutAddon
           response = ::HTTParty.get("https://api.hipchat.com/v2/oauth/token/#{account.hipchat_oauth_token}",
             :headers => { 'Content-Type' => 'application/json' })
 
-          puts '=' * 200
+          puts 'P' * 200
           puts('REQUEST: ' + response.request.inspect)
           puts('RESPONSE: ' + response.inspect)
-          puts '=' * 200
+          puts 'P' * 200
 
           session = JSON.parse(response.body)
 
