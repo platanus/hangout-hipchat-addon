@@ -1,5 +1,6 @@
 module HangoutAddon
   class API < ::Grape::API
+    include HTTParty
     format :json
 
     resource :hipchat do
