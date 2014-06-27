@@ -1,3 +1,5 @@
+require 'httparty'
+
 module HangoutAddon
   class API < ::Grape::API
     format :json
