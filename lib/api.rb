@@ -1,5 +1,4 @@
 require 'httparty'
-require 'hipchat'
 
 module HangoutAddon
   class API < ::Grape::API
@@ -16,35 +15,11 @@ module HangoutAddon
           room_id = room[:id]
 
           account = Account.find_by hipchat_room_id: room_id.to_s
-
-          #auth = {:username => account.hipchat_oauth_id, :password => account.hipchat_oauth_secret}
-
-          #response = ::HTTParty.post("https://api.hipchat.com/v2/oauth/token?auth_token=#{account.hipchat_oauth_token}",
-          #  :basic_auth => auth,
-          #  :body => {'grant_type' => 'client_credentials', 'scope' => 'send_notification view_group send_message'},
-          #  :headers => {'Content-Type' => 'application/json'})
-
-          #puts '/' * 200
-          #puts('REQUEST: ' + response.request.inspect)
-          #puts('RESPONSE: ' + response.inspect)
-          #puts '/' * 200
-
-          #session = JSON.parse(response.body)
-
           json_body = JSON.generate({ message: 'hangout url'})
 
           response = ::HTTParty.post("https://api.hipchat.com/v2/room/#{room_name}/notification?auth_token=#{account.hipchat_oauth_token}",
             :body => json_body,
             :headers => {'Content-Type' => 'application/json'})
-
-
-          puts '/' * 200
-          puts('REQUEST: ' + response.request.inspect)
-          puts('RESPONSE: ' + response.inspect)
-          puts '/' * 200
-
-          #client = ::HipChat::Client.new(session['access_token'], :api_version => 'v2')
-          #client[room_name].send('Hangout bot', 'I talk')
         end
         200
       end

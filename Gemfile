@@ -11,7 +11,6 @@ gem 'sinatra'
 gem 'rack-flash3'
 
 # Hipchat Add-on
-gem 'hipchat'
 gem 'jwt'
 gem 'oauth2'
 
