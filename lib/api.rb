@@ -14,7 +14,7 @@ module HangoutAddon
 
           account = Account.find_by hipchat_room_id: room_id
 
-          client = ::HipChat::Client.new(account.hipchat_oauth_token, :api_version => 'v2')
+          client = HipChat::Client.new(account.hipchat_oauth_token, :api_version => 'v2')
           client[room_name].send('Hangout bot', 'I talk')
         end
         200
@@ -90,7 +90,7 @@ module HangoutAddon
           account.save
 
           #Subscribe to room message
-          response = HTTParty.post("https://api.hipchat.com/v2/room/{#{account.hipchat_room_id}}/webhook",
+          response = ::HTTParty.post("https://api.hipchat.com/v2/room/{#{account.hipchat_room_id}}/webhook",
             :query => {
               :url => "#{ENV['BASE_URI']}/hipchat/new_message",
               :event => 'room_message',
