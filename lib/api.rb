@@ -14,7 +14,7 @@ module HangoutAddon
           room_name = room[:name]
           room_id = room[:id]
 
-          account = Account.find_by hipchat_room_id: room_id
+          account = Account.find_by hipchat_room_id: room_id.to_s
 
           client = HipChat::Client.new(account.hipchat_oauth_token, :api_version => 'v2')
           client[room_name].send('Hangout bot', 'I talk')
