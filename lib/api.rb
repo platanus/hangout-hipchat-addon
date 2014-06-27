@@ -1,4 +1,5 @@
 require 'httparty'
+require 'hipchat'
 
 module HangoutAddon
   class API < ::Grape::API
