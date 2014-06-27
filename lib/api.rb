@@ -17,7 +17,12 @@ module HangoutAddon
 
           account = Account.find_by hipchat_room_id: room_id.to_s
 
-          client = ::HipChat::Client.new(account.hipchat_oauth_token, :api_version => 'v2')
+          response = ::HTTParty.get("https://api.hipchat.com/v2/oauth/token/#{account.hipchat_oauth_token}",
+            :headers => { 'Content-Type' => 'application/json' })
+
+          session = JSON.parse(response.body)
+
+          client = ::HipChat::Client.new(session['access_token'], :api_version => 'v2')
           client[room_name].send('Hangout bot', 'I talk')
         end
         200
