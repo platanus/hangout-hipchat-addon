@@ -10,7 +10,7 @@ require 'haml'
 
 configure do
   MongoMapper.setup({
-    ENV['RACK_ENV'] => { 'uri' => ENV['MONGOHQ_URL']}
+    ENV['RACK_ENV'] => { 'uri' => ENV['MONGHQ_URL']}
   }, ENV['RACK_ENV'])
 end
 
@@ -23,7 +23,7 @@ module HangoutAddon
 
     set :session_secret, ENV['SESSION_SECRET']
 
-    
+
   end
 end
 
