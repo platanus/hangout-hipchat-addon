@@ -41,6 +41,11 @@ module HangoutAddon
           desc: 'Account that has installed the add-on'
       end
       post 'install/:account_id' do
+
+        puts '/'*50
+        puts params.inspect
+        puts '/'*50
+
         if account = Account.find_by_id(params[:account_id])
           # Update account
           account.hipchat_oauth_id = params[:oauthId]
