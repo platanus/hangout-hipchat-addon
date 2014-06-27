@@ -99,10 +99,10 @@ module HangoutAddon
               :name => 'Searching hangout'
             })
 
-          puts '&' * 200
+          puts '&&' * 200
           puts('REQUEST: ' + response.request.inspect)
           puts('RESPONSE: ' + response.inspect)
-          puts '&' * 200
+          puts '&&' * 200
           200
         else
           # Responding with error status will cause the installation to fail
