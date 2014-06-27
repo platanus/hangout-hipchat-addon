@@ -3,6 +3,23 @@ module HangoutAddon
     format :json
 
     resource :hipchat do
+      desc 'Recipient for new messages'
+      post 'new_message' do
+        message = params[:item][:message][:message] rescue 'Error trying to get message'
+
+        if message =~ /vamos al hangout/
+          room = params[:item][:room]
+          room_name = room[:name]
+          room_id = room[:id]
+
+          account = Account.find_by hipchat_room_id: room_id
+
+          client = HipChat::Client.new(account.hipchat_oauth_token, :api_version => 'v2')
+          client[room_name].send('Hangout bot', 'I talk')
+        end
+        200
+      end
+
       desc 'Describes the add-on and what its capabilities are'
       params do
         requires :account_id, type: String,
@@ -41,11 +58,6 @@ module HangoutAddon
           desc: 'Account that has installed the add-on'
       end
       post 'install/:account_id' do
-
-        puts '/'*50
-        puts params.inspect
-        puts '/'*50
-
         if account = Account.find_by_id(params[:account_id])
           # Update account
           account.hipchat_oauth_id = params[:oauthId]
@@ -76,6 +88,17 @@ module HangoutAddon
           account.hipchat_oauth_token = token
 
           account.save
+
+          #Subscribe to room message
+          response = HTTParty.post("https://api.hipchat.com/v2/room/{#{account.hipchat_room_id}}/webhook",
+            :query => {
+              :url => "#{ENV['BASE_URI']}/hipchat/new_message",
+              :event => 'room_message',
+              :name => 'Searching hangout'
+            }
+
+          response = response.parsed_response
+
           200
         else
           # Responding with error status will cause the installation to fail
