@@ -20,6 +20,10 @@ module HangoutAddon
           response = ::HTTParty.post("https://api.hipchat.com/v2/room/#{room_name}/notification?auth_token=#{account.hipchat_oauth_token}",
             :body => json_body,
             :headers => {'Content-Type' => 'application/json'})
+
+          puts '/' * 50
+          puts response.inspect
+          puts '/' * 50
         end
         200
       end
