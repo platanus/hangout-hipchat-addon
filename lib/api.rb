@@ -21,9 +21,9 @@ module HangoutAddon
             :body => json_body,
             :headers => {'Content-Type' => 'application/json'})
 
-          puts '&' * 50
+          puts '-' * 50
           puts response.inspect
-          puts '&' * 50
+          puts '-' * 50
         end
         200
       end
