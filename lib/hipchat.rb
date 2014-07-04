@@ -1,3 +1,5 @@
+require 'httparty'
+
 class Hipchat
   attr_accessor :token
 
@@ -5,15 +7,18 @@ class Hipchat
     @token = token
   end
 
-  def suscribe_to(room_id, event, callback_url)
-    json_body = JSON.generate({
-      :url => callback_url,
-      :event => 'room_message',
-      :name => 'Searching hangout'
-    })
+  def suscribe_to(room_id, opts = {})
+    json_body = JSON.generate(opts)
 
-    response = ::HTTParty.post("https://api.hipchat.com/v2/room/#{account.hipchat_room_id}/webhook?auth_token=#{@token}",
+    response = ::HTTParty.post("https://api.hipchat.com/v2/room/#{room_id}/webhook?auth_token=#{@token}",
                                :body => json_body,
+                               :headers => {'Content-Type' => 'application/json'})
+    data = JSON.parse(response)
+    data["id"]
+  end
+
+  def cancel_suscription(room_id, hook_id)
+    response = ::HTTParty.delete("https://api.hipchat.com/v2/room/#{room_id}/webhook/#{hook_id}?auth_token=#{@token}",
                                :headers => {'Content-Type' => 'application/json'})
   end
 

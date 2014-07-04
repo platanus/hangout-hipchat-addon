@@ -1,4 +1,3 @@
-require 'httparty'
 require_relative 'hipchat'
 
 module HangoutAddon
@@ -89,7 +88,7 @@ module HangoutAddon
           account.hipchat_oauth_token = token
 
           #Subscribe to room message
-          Hipchat.new(token).suscribe_to(account.hipchat_room_id, "room_message", "#{ENV['BASE_URI']}/hipchat/new_message)")
+          account.message_hook_id = Hipchat.new(token).suscribe_to(account.hipchat_room_id, event: "room_message", url: "#{ENV['BASE_URI']}/hipchat/new_message)", name: 'Searching hangout')
 
           account.save
           200
@@ -108,6 +107,10 @@ module HangoutAddon
       end
       delete 'install/:account_id/:oauth_id' do
         if account = Account.find(params[:account_id])
+
+          # Removes webhook
+          Hipchat.new(account.hipchat_oauth_token).cancel_suscription(account.message_hook_id)
+
           account.hipchat_installed = false
           account.save
         else

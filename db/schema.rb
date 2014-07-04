@@ -11,7 +11,10 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20140627172545) do
+ActiveRecord::Schema.define(version: 20140704184334) do
+
+  # These are extensions that must be enabled in order to support this database
+  enable_extension "plpgsql"
 
   create_table "accounts", force: true do |t|
     t.boolean  "hipchat_installed"
@@ -24,6 +27,8 @@ ActiveRecord::Schema.define(version: 20140627172545) do
     t.string   "hipchat_capabilities_url"
     t.datetime "created_at"
     t.datetime "updated_at"
+    t.string   "hipchat_room_id"
+    t.string   "message_hook_id"
   end
 
 end
