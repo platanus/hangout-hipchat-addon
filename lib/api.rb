@@ -1,4 +1,5 @@
 require 'httparty'
+require_relative 'hipchat'
 
 module HangoutAddon
   class API < ::Grape::API
@@ -15,15 +16,7 @@ module HangoutAddon
           room_id = room[:id]
 
           account = Account.find_by hipchat_room_id: room_id.to_s
-          json_body = JSON.generate({ message: 'hangout url'})
-
-          response = ::HTTParty.post("https://api.hipchat.com/v2/room/#{room_name}/notification?auth_token=#{account.hipchat_oauth_token}",
-            :body => json_body,
-            :headers => {'Content-Type' => 'application/json'})
-
-          puts '-' * 50
-          puts response.inspect
-          puts '-' * 50
+          Hipchat.new(account.hipchat_oauth_token).send_message(room_name, 'hangout url')
         end
         200
       end
@@ -96,15 +89,7 @@ module HangoutAddon
           account.hipchat_oauth_token = token
 
           #Subscribe to room message
-          json_body = JSON.generate({
-            :url => "#{ENV['BASE_URI']}/hipchat/new_message",
-            :event => 'room_message',
-            :name => 'Searching hangout'
-          })
-
-          response = ::HTTParty.post("https://api.hipchat.com/v2/room/#{account.hipchat_room_id}/webhook?auth_token=#{token}",
-            :body => json_body,
-            :headers => {'Content-Type' => 'application/json'})
+          Hipchat.new(token).suscribe_to(account.hipchat_room_id, "room_message", "#{ENV['BASE_URI']}/hipchat/new_message)")
 
           account.save
           200
